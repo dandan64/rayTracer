@@ -43,6 +43,10 @@ public:
     double length() const{
         return std::sqrt(length_squared());
     }
+    bool near_zero() const{
+        auto s = 1e-8;
+        return (std::fabs(e[0] <s) && std::fabs(e[1] <s) && std::fabs(e[2] <s));
+    }
 
     static  vec3 random(){
         return vec3(random_double(), random_double(), random_double());
