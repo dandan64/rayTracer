@@ -13,4 +13,5 @@ add_executable(rayTracer
         hittable_list.h
         rtweekend.h
         intreval.h
-        camera.h)
+        camera.h
+        material.h)
