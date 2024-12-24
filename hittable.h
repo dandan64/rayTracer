@@ -1,17 +1,18 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
-
+//#include <memory>
 #include "rtweekend.h"
+
 class material;
 
 class hit_record{
 public:
     point3  p;
     vec3 normal;
+    shared_ptr<material> mat;
     double t;
     bool front_face;
-    shared_ptr<material> mat;
 
     void set_front_face(const ray& r, const vec3& outward_normal){
         front_face = dot(r.direction(), outward_normal) < 0;

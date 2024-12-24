@@ -2,12 +2,14 @@
 #define CAMERA_H
 
 #include "hittable.h"
+#include "material.h"
+#include <memory>
 
 class camera {
 public:
     double  aspect_ratio = 1.0;
     int image_width = 100;
-    int samples_per_pixel = 100;
+    int samples_per_pixel = 10;
     int max_depth = 10;
 
     void render(const hittable& world){
@@ -91,8 +93,12 @@ private:
 
         hit_record rec;
         if(world.hit(r, intreval(0.001, infinity), rec)){
-            vec3 direction = rec.normal +random_unit_vector();
-            return 0.5 * ray_color(ray(rec.p, direction),depth - 1, world);
+            ray  scattered;
+            color attenuation;
+            if(rec.mat->scatter(r, rec, attenuation, scattered)){
+                return attenuation * ray_color(scattered, depth - 1 ,world);
+            }
+            return color(0, 0, 0);
         }
 
 
